@@ -14,18 +14,29 @@ router.get("/membersonly", bearerAuth, membersOnlyHandler);
 
 async function signupHandler(req, res) {
   let password = await bcrypt.hash(req.body.password, 5);
-  let newToken = jwt.sign({ username: req.body.username }, SECRET);
+  let newToken = jwt.sign(
+    {
+      exp: Math.floor(Date.now() / 1000) + 60 * 60,
+      data: req.body.username,
+      algorithm: "RS256",
+    },
+    SECRET
+  );
   let newUser = {
     username: req.body.username,
     password,
     token: newToken,
   };
   let user = await User.create(newUser);
-  res.status(201).json(user);
+  res.status(201).json({ id: user.username, token: user.token });
 }
 
 async function signinHandler(req, res) {
-  res.status(200).json({ username: req.authorizedUser });
+  let user = await User.findOne({ where: { username: req.validUsername } });
+  console.log(req.validUsername);
+  let newToken = jwt.sign({ username: req.validUsername }, SECRET);
+  user.token = newToken;
+  res.status(200).json({ id: user.username, token: user.token });
 }
 
 async function membersOnlyHandler(req, res) {
