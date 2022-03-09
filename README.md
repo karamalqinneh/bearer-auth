@@ -8,5 +8,5 @@ A server that allows a user to create an account as well as to handle Basic Auth
 
 ## Submission
 
-1. [PR Link]()
-2. [Deployed Server]()
+1. [PR Link](https://github.com/karamalqinneh/bearer-auth/pull/2)
+2. [Deployed Server](https://karam-bearer-auth.herokuapp.com/)
