@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const SECRET = process.env.SECRET;
 const { User } = require("../models/index");
+const errorHandler = require("../../middleware/500");
 
 const bearerAuth = async (req, res, next) => {
   if (req.headers["authorization"]) {
@@ -22,6 +23,8 @@ const bearerAuth = async (req, res, next) => {
     } else {
       res.status(500).send("please login again");
     }
+  } else {
+    next(errorHandler);
   }
 };
 module.exports = bearerAuth;
