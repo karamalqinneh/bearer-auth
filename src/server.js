@@ -5,6 +5,7 @@ const authRoute = require("./auth/router");
 const cors = require("cors");
 // express app
 const app = express();
+app.use(cors());
 
 // connect to sequelize & listen for requests
 const start = (port) => {
@@ -12,7 +13,7 @@ const start = (port) => {
 };
 
 // middleware & static files
-app.use(cors());
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
