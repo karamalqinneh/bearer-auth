@@ -2,7 +2,7 @@ const express = require("express");
 const notFoundHandler = require("./middleware/404");
 const errorHandler = require("./middleware/500");
 const authRoute = require("./auth/router");
-
+const cors = require("cors");
 // express app
 const app = express();
 
@@ -12,6 +12,7 @@ const start = (port) => {
 };
 
 // middleware & static files
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
